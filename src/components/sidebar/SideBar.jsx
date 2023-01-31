@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import { IoCalendar, IoCheckmarkDoneCircle, IoCalendarNumber, IoCalendarOutline } from 'react-icons/io5'
 
 const Container = styled.div`
-  padding: 10px;
-  height: 100%;
-  box-shadow: 10px 0 5px -5px #dfdede;
+background-color: white;
+  padding: 10px 10px 0px 10px;
+  height: 100vh;
+  box-shadow: 10px 0 5px -5px #d6d6d6;
+  margin-right: 5px;
 `;
 
 const List = styled.ul`
@@ -14,20 +16,21 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   padding: 10px 0px;
+  margin: 15px 0px;
 `;
 
 const Link = styled.a`
-  font-size: 15px;
+  font-size: 18px;
   text-decoration: none;
   color: black;
   &:hover{
-    color: #db0bdb;
+    color: #6239da;
     transition: 0.3s;
   }
 `;
 
 const Icon = styled.span`
-  font-size: 15px;
+  font-size: 18px;
   margin-right: 3px;
 `;
 

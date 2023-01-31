@@ -1,19 +1,44 @@
 import React from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import SideBar from './components/sidebar/SideBar';
 import styled  from 'styled-components';
+import TopBar from "./components/topBar/TopBar";
+import Task from './components/task/Task';
 
+const ContentContainer = styled.div`
+  background-color: #f6f8fa;
+`;
+
+const TasksContainer = styled.div`
+  display: flex;
+  flex-grow: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
 
 const App = () => {
   return (
-      <Grid container spacing={1}>
-        <Grid item xs={2}>
-          <SideBar/>
+    <ContentContainer>
+        <Grid container sx={{ height: '100vh' }} s>
+          <Grid item md={2}>
+            <SideBar/>
+          </Grid>
+          <Grid item md={10}>
+            <TopBar title="Hoje"/>
+            <TasksContainer>
+              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2023"/>
+              <Task name="Café" description="lalalalalal" concluded={false} date="20-02-2023"/>
+              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2024"/>
+              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2025"/>
+              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2023"/>
+              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2023"/>
+              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2023"/>
+              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2023"/>
+            </TasksContainer>
+          </Grid>
         </Grid>
-        <Grid item xs={10}>
-          
-        </Grid>
-      </Grid>
+      </ContentContainer>
   );
 }
 
