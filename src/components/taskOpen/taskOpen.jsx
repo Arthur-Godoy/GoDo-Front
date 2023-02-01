@@ -1,9 +1,11 @@
 import React from 'react'
 
-function taskOpen(props) {
+const TaskOpen = ({task}) => {
   return (
-    <div>taskOpen</div>
+    <div>
+        <p>{task.id}</p>
+    </div>
   )
 }
 
-export default taskOpen
+export default TaskOpen

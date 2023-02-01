@@ -5,6 +5,7 @@ import styled  from 'styled-components';
 import TopBar from "./components/topBar/TopBar";
 import TaskMin from './components/taskMin/Task';
 import api from './services/api'
+import TaskOpen from './components/taskOpen/TaskOpen';
 
 const ContentContainer = styled.div`
   background-color: #f6f8fa;
@@ -21,11 +22,11 @@ const TasksContainer = styled.div`
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [open, setOpen] = useState(false);
-  const [task, setTask] = useState({});
+  const [modalTask, setModalTask] = useState({});
 
   const handleOpen = () =>{setOpen(true)}
   const handleClose = () =>{setOpen(false)}
-  const changeModalTask = (childTask) =>{setTask(childTask)}
+  const changeModalTask = (childTask) =>{setModalTask(childTask)}
 
   useEffect(() => {
     api.get('tasks')
@@ -61,7 +62,7 @@ const App = () => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <h1>asdasd</h1>
+          <TaskOpen task={modalTask} />
         </Modal>
       </ContentContainer>
   );
