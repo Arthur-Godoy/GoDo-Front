@@ -16,19 +16,15 @@ import {IoFlag} from 'react-icons/io5'
     `;
 
     const DeadLine = styled.p`
-        display: inline;
         color: ${ props => props.late ? "#fa0000" : "#02cf69"};
-        font-size: 13px;
     `;
 
     const Date = styled.p`
-        display: inline;
         color: ${ props => props.late ? "#fa0000" : "#b3afaf"};
-        text-align: right;
-        font-size: 13px;
     `;
 
     const Details = styled.div`
+        font-size: 13px;
         margin: 5px 5px 0px 5px;
         display: flex;
         justify-content: space-between;
@@ -42,11 +38,12 @@ function TaskMin({task, handleOpen, changeModalTask}) {
         date = date.split('-');
         let taskDate = new window.Date(date[0], date[1] - 1, date[2]);
         setLate(new window.Date() > taskDate);
-    }, []);
+    }, [task]);
 
     return (
         <Container
             onClick={() => {
+                task.late = late;
                 changeModalTask(task);
                 handleOpen();
             } }>

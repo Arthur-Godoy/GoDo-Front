@@ -8,64 +8,80 @@ import api from './services/api'
 import TaskOpen from './components/taskOpen/TaskOpen';
 
 const ContentContainer = styled.div`
-  background-color: #f6f8fa;
+    margin: 0;
+    background-color: #f6f8fa;
 `;
 
 const TasksContainer = styled.div`
-  display: flex;
-  flex-grow: 0;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+    display: flex;
+    flex-grow: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 `;
 
 const App = () => {
-  const [tasks, setTasks] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [modalTask, setModalTask] = useState({});
+    const [tasks, setTasks] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [modalTask, setModalTask] = useState({});
 
-  const handleOpen = () =>{setOpen(true)}
-  const handleClose = () =>{setOpen(false)}
-  const changeModalTask = (childTask) =>{setModalTask(childTask)}
+    const handleOpen = () =>{setOpen(true)}
+    const handleClose = () =>{setOpen(false)}
+    const changeModalTask = (childTask) =>{setModalTask(childTask)}
+    
+    const deleteTask = (id) =>{
+        api.delete('tasks/'+id)
+        .then(() => window.location.reload(true))
+    }
 
-  useEffect(() => {
-    api.get('tasks')
-        .then((response) => {
-          setTasks(response.data)
+    const storeTask = (task) =>{
+        api.post('tasks', {
+            name: task.name,
+            description: task.description,
+            finishDate: task.finishDate,
+            concluded: task.concluded
         })
-        .catch((err) => {
-          console.log('erro' + err)
-        })
-  },[])
+        .then(() => window.location.reload(true))
+    }
 
-  return (
-    <ContentContainer>
-        <Grid container sx={{ height: '100vh' }} s>
-          <Grid item md={2}>
-            <SideBar/>
-          </Grid>
-          <Grid item md={10}>
-            <TopBar title="Hoje"/>
-            <TasksContainer>
-              {tasks.map((task) =>{
-                console.log(task)
-                return(
-                  <TaskMin handleOpen={handleOpen} changeModalTask={changeModalTask} key={task.id} task={task}/>
-                )
-              })}
-            </TasksContainer>
-          </Grid>
-        </Grid>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <TaskOpen task={modalTask} />
-        </Modal>
-      </ContentContainer>
-  );
+    useEffect(() => {
+        api.get('tasks')
+            .then((response) => {
+                setTasks(response.data)
+            })
+            .catch((err) => {
+                console.log('erro' + err)
+            })
+    },[])
+
+    return (
+        <ContentContainer>
+            <Grid container sx={{ height: '100vh', margin:0 }} s>
+                <Grid item md={2}>
+                    <SideBar/>
+                </Grid>
+                <Grid item md={10}>
+                    <TopBar title="Hoje" storeTask={storeTask}/>
+                    <TasksContainer>
+                        {tasks.map((task) =>{
+                            console.log(task)
+                            return(
+                                <TaskMin handleOpen={handleOpen} changeModalTask={changeModalTask} key={task.id} task={task}/>
+                            )
+                        })}
+                    </TasksContainer>
+                </Grid>
+            </Grid>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <TaskOpen deleteTask={deleteTask} task={modalTask} />
+            </Modal>
+        </ContentContainer>
+    );
 }
 
 export default App;
