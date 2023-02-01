@@ -1,9 +1,10 @@
-import React from "react";
-import { Grid } from "@mui/material";
+import React, {useEffect, useState} from "react";
+import { Grid, Modal } from "@mui/material";
 import SideBar from './components/sidebar/SideBar';
 import styled  from 'styled-components';
 import TopBar from "./components/topBar/TopBar";
-import Task from './components/task/Task';
+import TaskMin from './components/taskMin/Task';
+import api from './services/api'
 
 const ContentContainer = styled.div`
   background-color: #f6f8fa;
@@ -18,6 +19,24 @@ const TasksContainer = styled.div`
 `;
 
 const App = () => {
+  const [tasks, setTasks] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [task, setTask] = useState({});
+
+  const handleOpen = () =>{setOpen(true)}
+  const handleClose = () =>{setOpen(false)}
+  const changeModalTask = (childTask) =>{setTask(childTask)}
+
+  useEffect(() => {
+    api.get('tasks')
+        .then((response) => {
+          setTasks(response.data)
+        })
+        .catch((err) => {
+          console.log('erro' + err)
+        })
+  },[])
+
   return (
     <ContentContainer>
         <Grid container sx={{ height: '100vh' }} s>
@@ -27,17 +46,23 @@ const App = () => {
           <Grid item md={10}>
             <TopBar title="Hoje"/>
             <TasksContainer>
-              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2023"/>
-              <Task name="Café" description="lalalalalal" concluded={false} date="20-02-2023"/>
-              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2024"/>
-              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2025"/>
-              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2023"/>
-              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2023"/>
-              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2023"/>
-              <Task name="Café" description="lalalalalal" concluded={false} date="20-01-2023"/>
+              {tasks.map((task) =>{
+                console.log(task)
+                return(
+                  <TaskMin handleOpen={handleOpen} changeModalTask={changeModalTask} key={task.id} task={task}/>
+                )
+              })}
             </TasksContainer>
           </Grid>
         </Grid>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <h1>asdasd</h1>
+        </Modal>
       </ContentContainer>
   );
 }
