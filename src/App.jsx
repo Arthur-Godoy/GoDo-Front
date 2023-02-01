@@ -3,7 +3,7 @@ import { Grid, Modal } from "@mui/material";
 import SideBar from './components/sidebar/SideBar';
 import styled  from 'styled-components';
 import TopBar from "./components/topBar/TopBar";
-import TaskMin from './components/taskMin/Task';
+import TaskMin from './components/taskMin/TaskMin';
 import api from './services/api'
 import TaskOpen from './components/taskOpen/TaskOpen';
 
@@ -44,6 +44,27 @@ const App = () => {
         .then(() => window.location.reload(true))
     }
 
+    const updateTask = (task) =>{
+        console.log(task)
+        api.put('tasks/'+task.id, {
+            name: task.name,
+            description: task.description,
+            finishDate: task.finishDate,
+            concluded: task.concluded
+        })
+        .then(() => window.location.reload(true))
+    }
+
+    const concludeTask = (request) =>{
+        api.put('tasks/'+ request.id, {
+            name: request.name,
+            description: request.description,
+            finishDate: request.date,
+            concluded: request.concluded
+        })
+        .then(() => window.location.reload(true))
+    }
+
     useEffect(() => {
         api.get('tasks')
             .then((response) => {
@@ -78,7 +99,7 @@ const App = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <TaskOpen deleteTask={deleteTask} task={modalTask} />
+                <TaskOpen updateTask={updateTask} concludeTask={concludeTask} deleteTask={deleteTask} task={modalTask} />
             </Modal>
         </ContentContainer>
     );

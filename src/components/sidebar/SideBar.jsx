@@ -52,7 +52,7 @@ const SideBar = () => {
                     <Link href=""> <Icon><IoCalendar/></Icon>  Todos</Link>
                 </ListItem>
                 <ListItem>
-                    <Link href=""> <Icon><IoCalendarNumber/></Icon> Hoje</Link>
+                    <Link href=""> <Icon><IoCalendarNumber/></Icon> À Fazer</Link>
                 </ListItem>
                 <ListItem>
                     <Link href=""> <Icon><IoCheckmarkDoneCircle/></Icon>  Concluídos</Link>

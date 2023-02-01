@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import {IoFlag} from 'react-icons/io5'
+import {IoFlag, IoCheckmarkDone, IoClose} from 'react-icons/io5'
 
     const Container = styled.div`
         padding: 10px; 
@@ -30,6 +30,11 @@ import {IoFlag} from 'react-icons/io5'
         justify-content: space-between;
     `;
 
+    const ConcludeIcon = styled.span`
+        color: ${props => props.concluded ? 'green' : 'red'};
+        margin-right: 25px;
+    `;
+
 function TaskMin({task, handleOpen, changeModalTask}) {
     const [late, setLate] = useState(false);
 
@@ -47,7 +52,7 @@ function TaskMin({task, handleOpen, changeModalTask}) {
                 changeModalTask(task);
                 handleOpen();
             } }>
-            <input type="checkbox" name={task.id} style={{ marginRight: 15 }} />
+            {task.concluded === 0 ? <ConcludeIcon><IoClose /></ConcludeIcon> : <ConcludeIcon concluded><IoCheckmarkDone /></ConcludeIcon>}
             <label htmlFor={task.id}>{task.name}</label>
             {late ? (
                 <Details>

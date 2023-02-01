@@ -33,6 +33,10 @@ const ButtonSubmmit = styled.button`
     border-radius: 50px;
     padding: 10px;
     background-color: #4f21d7;
+    &:hover{
+        background-color: #6137dd;
+        transition: 0.4s;
+    }
 `;
 
 const NewTask = ({storeTask}) => {
@@ -108,13 +112,15 @@ const NewTask = ({storeTask}) => {
             </InputContainer>
             <ButtonSubmmit 
                 onClick={()=>{
-                    let task = {
-                        name: name,
-                        description: description,
-                        finishDate: formatDate(date),
-                        concluded: 0,
+                    if(name !== '' && description !== ''){
+                        let task = {
+                            name: name,
+                            description: description,
+                            finishDate: formatDate(date),
+                            concluded: 0,
+                        }
+                        storeTask(task)
                     }
-                    storeTask(task)
                 }}
             >
                 Enviar
