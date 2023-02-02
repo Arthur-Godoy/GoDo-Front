@@ -102,6 +102,7 @@ const App = () => {
             .catch((err) => {
                 console.log('erro' + err)
             })
+            console.log(tasks)
     },[page])
 
     return (
@@ -120,10 +121,9 @@ const App = () => {
                         </TasksContainer>
                     )}
                     <TasksContainer>
+                        {tasks.length === 0 && tasks !== '' && <h1>AINDA NÃO TEMOS TAREFAS PARA EXIBIR</h1>}
                         {tasks !== '' && tasks.map((task) =>{
-                            return tasks.length === 0? (
-                                <h1>AINDA NÃO TEMOS TAREFAS PARA EXIBIR</h1>
-                            ):(
+                            return tasks.length !== 0 && (
                                 <TaskMin handleOpen={handleOpen} changeModalTask={changeModalTask} key={task.id} task={task}/>
                             )
                         })}
@@ -143,3 +143,4 @@ const App = () => {
 }
 
 export default App;
+
