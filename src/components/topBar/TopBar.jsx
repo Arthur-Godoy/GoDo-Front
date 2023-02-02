@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import styled from 'styled-components';
 import { IoAdd } from 'react-icons/io5'
 import { Modal } from '@mui/material';
-import NewTask from '../newtask/NewTask';
+import NewTask from '../newTask/NewTask';
 
 const Container = styled.div`
     display: flex;
