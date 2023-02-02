@@ -80,15 +80,17 @@ const App = () => {
                     
                 }else if(page === 'À Fazer'){
                     let tempArr = [];
+                    // eslint-disable-next-line array-callback-return
                     response.data.map((task) => {
                         if(task.concluded === 0){
                             tempArr.push(task)
                         }
                     })
                     setTasks(tempArr)
-        
+
                 }else if(page === 'Concluídos'){
                     let tempArr = [];
+                    // eslint-disable-next-line array-callback-return
                     response.data.map((task) => {
                         if(task.concluded === 1){
                             tempArr.push(task)

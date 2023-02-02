@@ -65,7 +65,6 @@ const ConcludedButton = styled.button`
     background-color: ${props => props.done ? '#FB0106' : '#4bd721'} ;
     &:hover{
         background-color: ${props => props.done ? '#f04043' : '#83f06d'} ;
-        background-color: ;
         transition: 0.4s;
     }
 `;
