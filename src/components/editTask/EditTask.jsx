@@ -43,7 +43,6 @@ const EditTask = ({task, updateTask}) => {
     const [name, setName] = useState(task.name);
     const [description, setDescription] = useState(task.description);
     const [date, setDate] = useState(task.finishDate);
-    const [number, setNumber] = useState(0);
 
     return (
         <EditTaskContainer>

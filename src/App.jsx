@@ -2,10 +2,10 @@ import React, {useEffect, useState} from "react";
 import { Grid, Modal, Skeleton } from "@mui/material";
 import SideBar from './components/sidebar/SideBar';
 import styled  from 'styled-components';
-import TopBar from "./components/topBar/TopBar";
-import TaskMin from './components/taskMin/TaskMin';
+import TopBar from "./components/topbar/TopBar";
+import TaskMin from './components/taskmin/TaskMin';
 import api from './services/api'
-import TaskOpen from './components/taskOpen/TaskOpen';
+import TaskOpen from './components/taskopen/TaskOpen';
 
 const ContentContainer = styled.div`
     margin: 0;
