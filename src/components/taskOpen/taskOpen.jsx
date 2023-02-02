@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import styled from 'styled-components';
 import {IoPencil, IoTrash, IoFlag} from 'react-icons/io5'
 import { Modal } from '@mui/material';
-import EditTask from './../editTask/EditTask';
+import EditTask from '../editTask/EditTask';
 
 const Container = styled.div`
     background-color: white;
