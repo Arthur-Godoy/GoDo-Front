@@ -76,6 +76,7 @@ const NewTask = ({storeTask}) => {
                     InputLabelProps={{
                         shrink: true,
                     }}
+                    inputProps={{maxLength: 36}}
                     margin="normal"
                 />
                 <TextField
@@ -87,6 +88,7 @@ const NewTask = ({storeTask}) => {
                     fullWidth
                     rows={10}
                     placeholder={descriptionText}
+                    inputProps={{maxLength: 255}}
                     margin="normal"
                     InputLabelProps={{
                         shrink: true,

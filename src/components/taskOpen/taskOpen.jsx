@@ -15,6 +15,8 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
+    word-wrap: break-word;
+    width: 400px;
     font-size: 30px;
     margin-top: 0px;
 `;
@@ -45,7 +47,7 @@ const DeadLine = styled.p`
 `;
 
 const Date = styled.p`
-    color: ${ props => props.late ? "#fa0000" : "#b3afaf"};
+    color: ${ props => props.late ? "#fa0000" : "#02cf69"};
 `;
 
 const Details = styled.div`
@@ -60,11 +62,17 @@ const ConcludedButton = styled.button`
     border: none;
     border-radius: 50px;
     padding: 10px;
-    background-color: #4bd721;
+    background-color: ${props => props.done ? '#FB0106' : '#4bd721'} ;
     &:hover{
-        background-color: #83f06d;
+        background-color: ${props => props.done ? '#f04043' : '#83f06d'} ;
+        background-color: ;
         transition: 0.4s;
     }
+`;
+
+const Description = styled.p`
+    word-wrap: break-word;
+    width: 450px;
 `;
 
 const TaskOpen = ({task, deleteTask, updateTask, concludeTask}) => {
@@ -93,7 +101,7 @@ const TaskOpen = ({task, deleteTask, updateTask, concludeTask}) => {
                 </IconButton>
             </div>
             </TopTitleContainer>
-            <p>{task.description}</p>
+            <Description>{task.description}</Description>
             <Details>
                 {task.late?(
                     <DeadLine late>
@@ -104,21 +112,40 @@ const TaskOpen = ({task, deleteTask, updateTask, concludeTask}) => {
                         <IoFlag /> No Prazo
                     </DeadLine>
                 )}
-                <ConcludedButton 
-                    onClick={()=>{
-                        let request ={
-                            id: task.id,
-                            name: task.name,
-                            description: task.description,
-                            date: task.finishDate,
-                            concluded: task.concluded === 0 ? (1):(0)
-                        }
-                        concludeTask(request)
-                    }}
-                >
-                    {task.concluded === 0 ? ('Marcar Como Concluído'):('Marcar como Pendente')}
-                </ConcludedButton>
-                <Date late>{task.finishDate}</Date>
+                {task.concluded === 0 ? (
+                    <ConcludedButton 
+                        onClick={()=>{
+                            let request ={
+                                id: task.id,
+                                name: task.name,
+                                description: task.description,
+                                date: task.finishDate,
+                                concluded: task.concluded === 0 ? (1):(0)
+                            }
+                            concludeTask(request)
+                        }}
+                    >
+                        Marcar Como Concluído
+                    </ConcludedButton>
+                ):(
+                    <ConcludedButton 
+                        done
+                        onClick={()=>{
+                            let request ={
+                                id: task.id,
+                                name: task.name,
+                                description: task.description,
+                                date: task.finishDate,
+                                concluded: task.concluded === 0 ? (1):(0)
+                            }
+                            concludeTask(request)
+                        }}
+                    >
+                        Marcar como Pendente
+                    </ConcludedButton>
+                )}
+                {task.late ? <Date late>{task.finishDate}</Date> : <Date>{task.finishDate}</Date>}
+                
             </Details>
             <Modal
                 open={open}

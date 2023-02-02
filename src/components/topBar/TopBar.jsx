@@ -11,6 +11,8 @@ const Container = styled.div`
 `;
 
 const NewButton = styled.button`
+    top: 15px;
+    position: absolute;
     border: none;
     border-radius: 50px;
     background-color: #4f21d7;

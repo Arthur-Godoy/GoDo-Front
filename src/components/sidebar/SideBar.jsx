@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import { IoCalendar, IoCheckmarkDoneCircle, IoCalendarNumber, IoCalendarOutline } from 'react-icons/io5'
+import { IoCalendar, IoCheckmarkDoneCircle, IoCalendarNumber, IoCalendarOutline, IoLogoGithub, IoLogoLinkedin } from 'react-icons/io5'
 
 const Container = styled.div`
     background-color: white;
@@ -12,6 +12,8 @@ const Container = styled.div`
 `;
 
 const List = styled.ul`
+    margin: 0px;
+    padding: 0px;
     list-style: none;
 `;
 
@@ -24,10 +26,20 @@ const Link = styled.a`
     font-size: 18px;
     text-decoration: none;
     color: black;
+    padding: 10px 30px;
     &:hover{
-      color: #6239da;
-      transition: 0.3s;
+        color: #6239da;
+        transition: 0.3s;
     }
+`;
+
+const ActiveLink = styled.a`
+    background-color: #6239da;
+    color: white;
+    border-radius: 50px;
+    padding: 10px 30px;
+    font-size: 18px;
+    text-decoration: none;
 `;
 
 const Icon = styled.span`
@@ -41,7 +53,26 @@ const Logo = styled.h1`
     margin-bottom: 60px;
 `;
 
-const SideBar = () => {
+const FooterContainer = styled.div`
+    position: absolute;
+    bottom: 20px;
+    left: 40px;
+    flex-direction: column;
+    display: flex;
+    font-size: 18px;
+    vertical-align: bottom;
+`;
+
+const MyLink = styled.a`
+    margin-bottom: 15px;
+    color: #6239da;
+    text-decoration: none;
+    &:hover{
+        text-decoration: underline;
+    }
+`;
+
+const SideBar = ({changePage, page}) => {
     return (
         <Container>
             <Logo>
@@ -49,15 +80,31 @@ const SideBar = () => {
             </Logo>
             <List>
                 <ListItem>
-                    <Link href=""> <Icon><IoCalendar/></Icon>  Todos</Link>
+                    {page === 'Todos' ? (
+                        <ActiveLink onClick={() => changePage('Todos')}> <Icon><IoCalendar/></Icon>  Todos</ActiveLink>
+                    ):(
+                        <Link onClick={() => changePage('Todos')}> <Icon><IoCalendar/></Icon>  Todos</Link>
+                    )}
                 </ListItem>
                 <ListItem>
-                    <Link href=""> <Icon><IoCalendarNumber/></Icon> À Fazer</Link>
+                    {page === 'À Fazer' ? (
+                        <ActiveLink onClick={() => changePage('À Fazer')}> <Icon><IoCalendarNumber/></Icon> À Fazer</ActiveLink>
+                    ):(
+                        <Link onClick={() => changePage('À Fazer')}> <Icon><IoCalendarNumber/></Icon> À Fazer</Link>
+                    )}
                 </ListItem>
                 <ListItem>
-                    <Link href=""> <Icon><IoCheckmarkDoneCircle/></Icon>  Concluídos</Link>
+                    {page === 'Concluídos' ? (
+                        <ActiveLink onClick={() =>{changePage('Concluídos')}}> <Icon><IoCheckmarkDoneCircle/></Icon>  Concluídos</ActiveLink>
+                    ):(
+                        <Link onClick={() =>{changePage('Concluídos')}}> <Icon><IoCheckmarkDoneCircle/></Icon>  Concluídos</Link>
+                    )}
                 </ListItem>
             </List>
+            <FooterContainer>
+                <MyLink target="_blank" href='https://github.com/Arthur-Godoy'><IoLogoGithub /> Meu Git-Hub</MyLink>
+                <MyLink target="_blank" href='https://www.linkedin.com/in/arthur-gomides-godoy-94aaa7212/'><IoLogoLinkedin /> Meu LinkedIn</MyLink>
+            </FooterContainer>
         </Container>
     )
 }

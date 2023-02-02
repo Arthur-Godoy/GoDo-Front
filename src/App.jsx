@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Grid, Modal } from "@mui/material";
+import { Grid, Modal, Skeleton } from "@mui/material";
 import SideBar from './components/sidebar/SideBar';
 import styled  from 'styled-components';
 import TopBar from "./components/topBar/TopBar";
@@ -21,17 +21,24 @@ const TasksContainer = styled.div`
 `;
 
 const App = () => {
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState('');
     const [open, setOpen] = useState(false);
     const [modalTask, setModalTask] = useState({});
+    const [page, setPage] = useState('Todos');
 
     const handleOpen = () =>{setOpen(true)}
+
     const handleClose = () =>{setOpen(false)}
+
     const changeModalTask = (childTask) =>{setModalTask(childTask)}
     
+    const changePage = (actualPage) =>{
+        setPage(actualPage);
+    }
+
     const deleteTask = (id) =>{
         api.delete('tasks/'+id)
-        .then(() => window.location.reload(true))
+        .then(() => window.location.reload(true));
     }
 
     const storeTask = (task) =>{
@@ -41,7 +48,7 @@ const App = () => {
             finishDate: task.finishDate,
             concluded: task.concluded
         })
-        .then(() => window.location.reload(true))
+        .then(() => window.location.reload(true));
     }
 
     const updateTask = (task) =>{
@@ -52,7 +59,7 @@ const App = () => {
             finishDate: task.finishDate,
             concluded: task.concluded
         })
-        .then(() => window.location.reload(true))
+        .then(() => window.location.reload(true));
     }
 
     const concludeTask = (request) =>{
@@ -62,31 +69,59 @@ const App = () => {
             finishDate: request.date,
             concluded: request.concluded
         })
-        .then(() => window.location.reload(true))
+        .then(() => window.location.reload(true));
     }
 
     useEffect(() => {
         api.get('tasks')
             .then((response) => {
-                setTasks(response.data)
+                if(page === 'Todos'){
+                    setTasks(response.data);
+                    
+                }else if(page === 'À Fazer'){
+                    let tempArr = [];
+                    response.data.map((task) => {
+                        if(task.concluded === 0){
+                            tempArr.push(task)
+                        }
+                    })
+                    setTasks(tempArr)
+        
+                }else if(page === 'Concluídos'){
+                    let tempArr = [];
+                    response.data.map((task) => {
+                        if(task.concluded === 1){
+                            tempArr.push(task)
+                        }
+                    })
+                    setTasks(tempArr)
+                }
             })
             .catch((err) => {
                 console.log('erro' + err)
             })
-    },[])
+    },[page])
 
     return (
         <ContentContainer>
             <Grid container sx={{ height: '100vh', margin:0 }} s>
                 <Grid item md={2}>
-                    <SideBar/>
+                    <SideBar page={page} changePage={changePage}/>
                 </Grid>
                 <Grid item md={10}>
-                    <TopBar title="Hoje" storeTask={storeTask}/>
+                    <TopBar title={page} storeTask={storeTask}/>
+                    {tasks === '' && (
+                        <TasksContainer>
+                            <Skeleton style={{margin: 10}} variant="rectangular" width={'30%'} height={90} />                            
+                            <Skeleton style={{margin: 10}} variant="rectangular" width={'30%'} height={90} />                            
+                            <Skeleton style={{margin: 10}} variant="rectangular" width={'30%'} height={90} />                            
+                        </TasksContainer>
+                    )}
                     <TasksContainer>
-                        {tasks.map((task) =>{
-                            console.log(task)
-                            return(
+                        {tasks !== '' && tasks.map((task) =>{
+                            return tasks.length === 0? (
+                                <h1>AINDA NÃO TEMOS TAREFAS PARA EXIBIR</h1>
+                            ):(
                                 <TaskMin handleOpen={handleOpen} changeModalTask={changeModalTask} key={task.id} task={task}/>
                             )
                         })}
